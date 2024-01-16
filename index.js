@@ -4,9 +4,18 @@ const port = 3000;
 const axios = require('axios');
 app.use(express.json());
 
+generateUUID = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (function(t) {
+    const e = 16 * Math.random() | 0;
+    return ("x" === t ? e : 3 & e | 8).toString(16)
+}));
+
+
 app.get('/', (req, res) => {
-    axios.post('https://api.discord.gx.games/v1/direct-fulfillment', {"partnerUserId":"bc385c68-be5f-43c2-9713-cb2051fef65b"}, {
-        // I'm OperaGX from www.opera.com ;)
+    // generates a post body with a random partnerUserId
+    postBody = {}
+    postBody.partnerUserId = generateUUID();
+    // I'm OperaGX from www.opera.com ;)
+    axios.post('https://api.discord.gx.games/v1/direct-fulfillment', postBody, {
         headers: {
                 "Content-Type": "application/json",
                 "Sec-Ch-Ua": "\"Opera GX\";v=\"105\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\"",
